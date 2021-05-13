@@ -54,31 +54,33 @@ ENV ANDROID_BUILD_TOOLS_VERSION="${ANDROID_API_LEVEL}.0.3"
 RUN mkdir -p ${ANDROID_HOME}
 # RUN sudo chown montransit:montransit ${ANDROID_HOME}
 
-ARG CMDLINE_TOOLS=https://dl.google.com/android/repository/commandlinetools-linux-${ANDROID_SDK_TOOLS_VERSION}_latest.zip
-# RUN wget --output-document=$ANDROID_HOME/cmdline-tools.zip $CMDLINE_TOOLS
-RUN mkdir -p ${ANDROID_HOME}/cmdline-tools
+ARG CMDLINE_TOOLS_URL=https://dl.google.com/android/repository/commandlinetools-linux-${ANDROID_SDK_TOOLS_VERSION}_latest.zip
+# RUN wget --output-document=$ANDROID_HOME/cmdline-tools.zip $CMDLINE_TOOLS_URL
+RUN mkdir -p ${ANDROID_HOME}/cmdline-tools/latest
 # RUN sudo chown -R montransit:montransit ${ANDROID_HOME}
-RUN wget -O /tmp/cmdline-tools.zip -t 5 "${CMDLINE_TOOLS}"
-RUN unzip -q /tmp/cmdline-tools.zip -d ${ANDROID_HOME}
+RUN wget -O /tmp/cmdline-tools.zip -t 5 "${CMDLINE_TOOLS_URL}"
+RUN unzip -q /tmp/cmdline-tools.zip -d /tmp/cmdline-tools
+RUN mv /tmp/cmdline-tools/cmdline-tools/* ${ANDROID_HOME}/cmdline-tools/latest
 RUN rm /tmp/cmdline-tools.zip
+RUN rm -rf /tmp/cmdline-tools
 
 ENV PATH=${PATH}:${ANDROID_HOME}
-ENV PATH=${PATH}:${ANDROID_HOME}/cmdline-tools/bin
-ENV PATH=${PATH}:${ANDROID_HOME}/tools
-ENV PATH=${PATH}:${ANDROID_HOME}/tools/bin
+ENV PATH=${PATH}:${ANDROID_HOME}/cmdline-tools/latest/bin
+# ENV PATH=${PATH}:${ANDROID_HOME}/cmdline-tools/bin
+# ENV PATH=${PATH}:${ANDROID_HOME}/tools
+# ENV PATH=${PATH}:${ANDROID_HOME}/tools/bin
 ENV PATH=${PATH}:${ANDROID_HOME}/platform-tools
 
 RUN ls -l ${ANDROID_HOME}
 RUN ls -l ${ANDROID_HOME}/cmdline-tools/
-RUN ls -l ${ANDROID_HOME}/cmdline-tools/bin
+RUN ls -l ${ANDROID_HOME}/cmdline-tools/latest
 # RUN ls -l ${ANDROID_HOME}/tools/
 # RUN ls -l ${ANDROID_HOME}/platform-tools/
 
 RUN yes | sdkmanager --sdk_root=${ANDROID_HOME} --licenses
 RUN yes | sdkmanager --sdk_root=${ANDROID_HOME} --update
 
-RUN sdkmanager --sdk_root=${ANDROID_HOME} "cmdline-tools;latest"
-
+RUN sdkmanager "cmdline-tools;latest"
 # RUN sdkmanager "tools"
 RUN sdkmanager "platform-tools"
 RUN sdkmanager "build-tools;${ANDROID_BUILD_TOOLS_VERSION}"
