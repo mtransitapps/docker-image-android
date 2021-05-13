@@ -63,13 +63,14 @@ RUN unzip -q /tmp/cmdline-tools.zip -d ${ANDROID_HOME}
 RUN rm /tmp/cmdline-tools.zip
 
 ENV PATH=${PATH}:${ANDROID_HOME}
-ENV PATH=${PATH}:${ANDROID_HOME}/cmdline-tools/tools/bin
+ENV PATH=${PATH}:${ANDROID_HOME}/cmdline-tools/bin
 ENV PATH=${PATH}:${ANDROID_HOME}/tools
 ENV PATH=${PATH}:${ANDROID_HOME}/tools/bin
 ENV PATH=${PATH}:${ANDROID_HOME}/platform-tools
 
 RUN ls -l ${ANDROID_HOME}
 RUN ls -l ${ANDROID_HOME}/cmdline-tools/
+RUN ls -l ${ANDROID_HOME}/cmdline-tools/bin
 # RUN ls -l ${ANDROID_HOME}/tools/
 # RUN ls -l ${ANDROID_HOME}/platform-tools/
 
