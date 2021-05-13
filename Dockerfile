@@ -37,7 +37,7 @@ RUN apt-get install -y openjdk-11-jdk
 # ENV JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64/"
 
 RUN groupadd montransit
-RUN useradd -d /opt/android-sdk-linux -g montransit montransit
+RUN useradd -g montransit montransit
 USER montransit
 ENV HOME /home/montransit
 
@@ -45,14 +45,14 @@ CMD ["/bin/sh"]
 
 WORKDIR /home/montransit
 
-ENV ANDROID_HOME="/opt/android-sdk"
+ENV ANDROID_HOME="${HOME}/android-sdk"
 # https://developer.android.com/studio/#command-tools
 ENV ANDROID_SDK_TOOLS_VERSION="7302050" 
 ENV ANDROID_API_LEVEL="30"
 ENV ANDROID_BUILD_TOOLS_VERSION="${ANDROID_API_LEVEL}.0.3"
 
 RUN sudo mkdir -p ${ANDROID_HOME}
-RUN sudo chown montransit:montransit ${ANDROID_HOME}
+# RUN sudo chown montransit:montransit ${ANDROID_HOME}
 
 ARG CMDLINE_TOOLS=https://dl.google.com/android/repository/commandlinetools-linux-${ANDROID_SDK_TOOLS_VERSION}_latest.zip
 # RUN wget --output-document=$ANDROID_HOME/cmdline-tools.zip $CMDLINE_TOOLS
@@ -78,8 +78,8 @@ RUN sdkmanager "platforms;android-${ANDROID_API_LEVEL}"
 # https://github.com/mtransitapps/commons/blob/master/shared/gradle/wrapper/gradle-wrapper.properties
 # https://docs.gradle.org/current/userguide/installation.html
 ENV GRADLE_VERSION="6.7.1"
-# ENV GRADLE_HOME="/opt/gradle"
-ENV GRADLE_DIR="/opt/gradle"
+# ENV GRADLE_HOME="/o pt/gradle"
+ENV GRADLE_DIR="${HOME}/gradle"
 RUN mkdir -p ${GRADLE_DIR}
 ARG GRADLE_ZIP=gradle-${GRADLE_VERSION}-all.zip
 ARG GRADLE_SDK_URL=https://services.gradle.org/distributions/${GRADLE_ZIP}
