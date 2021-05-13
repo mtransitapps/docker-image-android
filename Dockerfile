@@ -74,12 +74,13 @@ RUN ls -l ${ANDROID_HOME}/cmdline-tools/bin
 # RUN ls -l ${ANDROID_HOME}/tools/
 # RUN ls -l ${ANDROID_HOME}/platform-tools/
 
-RUN yes | sdkmanager --licenses && yes | sdkmanager --update
+RUN yes | sdkmanager --sdk_root=${ANDROID_HOME} --licenses
+RUN yes | sdkmanager --sdk_root=${ANDROID_HOME} --update
 
 # RUN sdkmanager "tools"
-RUN sdkmanager "platform-tools"
-RUN sdkmanager "build-tools;${ANDROID_BUILD_TOOLS_VERSION}"
-RUN sdkmanager "platforms;android-${ANDROID_API_LEVEL}"
+RUN sdkmanager --sdk_root=${ANDROID_HOME} "platform-tools"
+RUN sdkmanager --sdk_root=${ANDROID_HOME} "build-tools;${ANDROID_BUILD_TOOLS_VERSION}"
+RUN sdkmanager --sdk_root=${ANDROID_HOME} "platforms;android-${ANDROID_API_LEVEL}"
 
 # https://github.com/mtransitapps/commons/blob/master/shared/gradle/wrapper/gradle-wrapper.properties
 # https://docs.gradle.org/current/userguide/installation.html
