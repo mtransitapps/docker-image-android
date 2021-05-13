@@ -59,7 +59,7 @@ ARG CMDLINE_TOOLS=https://dl.google.com/android/repository/commandlinetools-linu
 RUN mkdir -p ${ANDROID_HOME}/cmdline-tools
 # RUN sudo chown -R montransit:montransit ${ANDROID_HOME}
 RUN wget -O /tmp/cmdline-tools.zip -t 5 "${CMDLINE_TOOLS}"
-RUN unzip -q /tmp/cmdline-tools.zip -d ${ANDROID_HOME}/cmdline-tools
+RUN unzip -q /tmp/cmdline-tools.zip -d ${ANDROID_HOME}
 RUN rm /tmp/cmdline-tools.zip
 
 ENV PATH=${PATH}:${ANDROID_HOME}
@@ -70,8 +70,8 @@ ENV PATH=${PATH}:${ANDROID_HOME}/platform-tools
 
 RUN ls -l ${ANDROID_HOME}
 RUN ls -l ${ANDROID_HOME}/cmdline-tools/
-RUN ls -l ${ANDROID_HOME}/tools/
-RUN ls -l ${ANDROID_HOME}/platform-tools/
+# RUN ls -l ${ANDROID_HOME}/tools/
+# RUN ls -l ${ANDROID_HOME}/platform-tools/
 
 RUN yes | sdkmanager --licenses && yes | sdkmanager --update
 
