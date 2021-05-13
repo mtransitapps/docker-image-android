@@ -38,8 +38,11 @@ RUN apt-get install -y openjdk-11-jdk
 
 RUN groupadd montransit
 RUN useradd -g montransit montransit
+RUN echo 'montransit ALL=NOPASSWD: ALL' >> /etc/sudoers.d/50-montransit
 USER montransit
 ENV HOME /home/montransit
+
+RUN sudo mkdir -p /opt/android-sdk
 
 CMD ["/bin/sh"]
 
