@@ -51,7 +51,8 @@ ENV ANDROID_SDK_TOOLS_VERSION="7302050"
 ENV ANDROID_API_LEVEL="30"
 ENV ANDROID_BUILD_TOOLS_VERSION="${ANDROID_API_LEVEL}.0.3"
 
-RUN mkdir -p ${ANDROID_HOME}
+RUN sudo mkdir -p ${ANDROID_HOME}
+RUN sudo chown montransit:montransit ${ANDROID_HOME}
 
 ARG CMDLINE_TOOLS=https://dl.google.com/android/repository/commandlinetools-linux-${ANDROID_SDK_TOOLS_VERSION}_latest.zip
 # RUN wget --output-document=$ANDROID_HOME/cmdline-tools.zip $CMDLINE_TOOLS
