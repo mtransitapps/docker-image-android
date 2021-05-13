@@ -51,16 +51,16 @@ ENV ANDROID_SDK_TOOLS_VERSION="7302050"
 ENV ANDROID_API_LEVEL="30"
 ENV ANDROID_BUILD_TOOLS_VERSION="${ANDROID_API_LEVEL}.0.3"
 
-RUN sudo mkdir -p ${ANDROID_HOME}
+RUN mkdir -p ${ANDROID_HOME}
 # RUN sudo chown montransit:montransit ${ANDROID_HOME}
 
 ARG CMDLINE_TOOLS=https://dl.google.com/android/repository/commandlinetools-linux-${ANDROID_SDK_TOOLS_VERSION}_latest.zip
 # RUN wget --output-document=$ANDROID_HOME/cmdline-tools.zip $CMDLINE_TOOLS
-RUN sudo mkdir -p ${ANDROID_HOME}/cmdline-tools && \
-    sudo chown -R montransit:montransit ${ANDROID_HOME} && \
-    wget -O /tmp/cmdline-tools.zip -t 5 "${CMDLINE_TOOLS}" && \
-    unzip -q /tmp/cmdline-tools.zip -d ${ANDROID_HOME}/cmdline-tools && \
-    rm /tmp/cmdline-tools.zip
+RUN mkdir -p ${ANDROID_HOME}/cmdline-tools
+# RUN sudo chown -R montransit:montransit ${ANDROID_HOME}
+RUN wget -O /tmp/cmdline-tools.zip -t 5 "${CMDLINE_TOOLS}"
+RUN unzip -q /tmp/cmdline-tools.zip -d ${ANDROID_HOME}/cmdline-tools
+RUN rm /tmp/cmdline-tools.zip
 
 ENV PATH=${PATH}:${ANDROID_HOME}
 ENV PATH=${PATH}:${ANDROID_HOME}/cmdline-tools/tools/bin
