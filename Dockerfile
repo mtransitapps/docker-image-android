@@ -68,6 +68,11 @@ ENV PATH=${PATH}:${ANDROID_HOME}/tools
 ENV PATH=${PATH}:${ANDROID_HOME}/tools/bin
 ENV PATH=${PATH}:${ANDROID_HOME}/platform-tools
 
+RUN ls -l ${ANDROID_HOME}
+RUN ls -l ${ANDROID_HOME}/cmdline-tools/
+RUN ls -l ${ANDROID_HOME}/tools/
+RUN ls -l ${ANDROID_HOME}/platform-tools/
+
 RUN yes | sdkmanager --licenses && yes | sdkmanager --update
 
 # RUN sdkmanager "tools"
