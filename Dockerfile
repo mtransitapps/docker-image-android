@@ -91,7 +91,7 @@ RUN sdkmanager "platforms;android-${ANDROID_API_LEVEL}"
 # https://github.com/mtransitapps/commons/blob/master/shared/gradle/wrapper/gradle-wrapper.properties
 # https://docs.gradle.org/current/userguide/installation.html
 ENV GRADLE_VERSION="6.7.1"
-ENV GRADLE_HOME="/opt/gradle"
+ENV GRADLE_DIR="/opt/gradle"
 # ENV GRADLE_DIR="${HOME}/gradle"
 RUN sudo mkdir -p ${GRADLE_DIR}
 RUN sudo chown montransit:montransit ${GRADLE_DIR}
