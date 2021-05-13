@@ -22,7 +22,7 @@ RUN dpkg --add-architecture i386
 RUN apt-get update -yqq
 RUN apt-get install -y apt apt-utils apt-transport-https 
 RUN apt-get install -y sudo git vim ssh openssh-client ca-certificates make
-RUN apt-get install -y gawk awk
+RUN apt-get install -y gawk mawk split
 RUN apt-get install -y gzip tar unzip zip bzip2
 RUN apt-get install -y curl wget
 # RUN apt-get install -y gradlew
