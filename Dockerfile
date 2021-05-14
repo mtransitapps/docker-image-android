@@ -103,6 +103,6 @@ RUN curl -sSL "${GRADLE_SDK_URL}" -o ${GRADLE_ZIP}  \
 ENV GRADLE_HOME="${GRADLE_DIR}/gradle-${GRADLE_VERSION}"
 ENV PATH=${PATH}:${GRADLE_HOME}/bin
 
-# CircleCI Compat
-RUN sudo mkdir -p /home/circleci
-RUN sudo chown montransit:montransit /home/circleci
+# # CircleCI Compat
+# RUN sudo mkdir -p /home/circleci
+# RUN sudo chown montransit:montransit /home/circleci
