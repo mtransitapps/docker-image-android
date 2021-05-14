@@ -73,11 +73,11 @@ ENV PATH=${PATH}:${ANDROID_HOME}/cmdline-tools/latest/bin
 # ENV PATH=${PATH}:${ANDROID_HOME}/tools/bin
 ENV PATH=${PATH}:${ANDROID_HOME}/platform-tools
 
-RUN ls -l ${ANDROID_HOME} || echo "> SKIP"
-RUN ls -l ${ANDROID_HOME}/cmdline-tools/ || echo "> SKIP"
-RUN ls -l ${ANDROID_HOME}/cmdline-tools/latest || echo "> SKIP"
-# RUN ls -l ${ANDROID_HOME}/tools/ || echo "> SKIP"
-# RUN ls -l ${ANDROID_HOME}/platform-tools/ || echo "> SKIP"
+RUN ls -al ${ANDROID_HOME} || echo "> SKIP"
+RUN ls -al ${ANDROID_HOME}/cmdline-tools/ || echo "> SKIP"
+RUN ls -al ${ANDROID_HOME}/cmdline-tools/latest || echo "> SKIP"
+# RUN ls -al ${ANDROID_HOME}/tools/ || echo "> SKIP"
+# RUN ls -al ${ANDROID_HOME}/platform-tools/ || echo "> SKIP"
 
 RUN yes | sdkmanager --sdk_root=${ANDROID_HOME} --licenses
 RUN yes | sdkmanager --sdk_root=${ANDROID_HOME} --update
@@ -104,8 +104,8 @@ RUN curl -sSL "${GRADLE_SDK_URL}" -o ${GRADLE_ZIP}  \
 ENV GRADLE_HOME="${GRADLE_DIR}/gradle-${GRADLE_VERSION}"
 ENV PATH=${PATH}:${GRADLE_HOME}/bin
 
-RUN ls -l ${GRADLE_HOME} || echo "> SKIP"
-RUN ls -l ${GRADLE_HOME}/bin || echo "> SKIP"
+RUN ls -al ${GRADLE_HOME} || echo "> SKIP"
+RUN ls -al ${GRADLE_HOME}/bin || echo "> SKIP"
 
 RUN gradle --version
 
@@ -123,17 +123,18 @@ ARG GIT_DIR="/tmp/git"
 ARG GIT_URL="https://github.com/mtransitapps/ca-montreal-bixi-bike-gradle.git"
 ARG GIT_BRANCH="use_docker_image"
 RUN git clone --depth 1 ${GIT_URL} --branch ${GIT_BRANCH} --single-branch $GIT_DIR
-RUN ls -l ${GIT_DIR} || echo "> SKIP"
+RUN ls -al ${GIT_DIR} || echo "> SKIP"
+RUN cd ${GIT_DIR} && git status;
 RUN cd ${GIT_DIR} && ./checkout_submodules.sh
 RUN cd ${GIT_DIR} && ./commons/sync.sh
 RUN cd ${GIT_DIR} && ./gradlew androidDependencies --console=plain
-RUN ls -l ${GIT_DIR} || echo "> SKIP"
+RUN ls -al ${GIT_DIR} || echo "> SKIP"
 RUN rm -rf ${GIT_DIR}
 
-RUN ls -l ${HOME} || echo "> SKIP"
-RUN ls -l ${HOME}/.gradle || echo "> SKIP"
-RUN ls -l ${HOME}/.gradle/wrapper || echo "> SKIP"
-RUN ls -l ${HOME}/.gradle/caches || echo "> SKIP"
+RUN ls -al ${HOME} || echo "> SKIP"
+RUN ls -al ${HOME}/.gradle || echo "> SKIP"
+RUN ls -al ${HOME}/.gradle/wrapper || echo "> SKIP"
+RUN ls -al ${HOME}/.gradle/caches || echo "> SKIP"
 
 # # CircleCI Compat
 # RUN sudo mkdir -p /home/circleci
