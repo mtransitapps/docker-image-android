@@ -9,6 +9,9 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     steps:
+      # -
+      #   name: Checkout this repo
+      #   uses: actions/checkout@v2
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -28,6 +31,14 @@ jobs:
           repository: mtransitapps/ca-montreal-bixi-bike-gradle
           ref: use_docker_image
           path: mt_project
+      -
+        name: Checkout submodules
+        working-directory: mt_project
+        run: ./checkout_submodules.sh
+      -
+        name: Sync files
+        working-directory: mt_project
+        run: ./commons/sync.sh
       -
         name: Build and push
         id: docker_build
