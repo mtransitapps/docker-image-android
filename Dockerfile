@@ -12,7 +12,8 @@ FROM ubuntu:latest
 
 LABEL maintainer="mtransit.apps@gmail.com"
 
-RUN pwd
+ARG GIT_DIR="/tmp/mt_project"
+ARG GIT_SRC_DIR="${GITHUB_WORKSPACE}/mt_project"
 COPY ${GIT_SRC_DIR} ${GIT_DIR}
 
 ENV TZ=America/Toronto
@@ -129,8 +130,8 @@ RUN sdkmanager "platform-tools" \
 #     --gradle-distribution-sha256-sum="${GRADLE_SHA256}" \
 #     --distribution-type="all"
 
-ARG GIT_DIR="/tmp/mt_project"
-ARG GIT_SRC_DIR="${GITHUB_WORKSPACE}/mt_project"
+# ARG GIT_DIR="/tmp/mt_project"
+# ARG GIT_SRC_DIR="${GITHUB_WORKSPACE}/mt_project"
 # ARG GIT_SRC_DIR="mt_project"
 # ARG GIT_URL="git@github.com:mtransitapps/ca-montreal-bixi-bike-gradle.git"
 # ARG GIT_URL="https://github.com/mtransitapps/ca-montreal-bixi-bike-gradle.git"
