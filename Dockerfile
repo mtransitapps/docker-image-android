@@ -124,10 +124,9 @@ ARG GIT_URL="https://github.com/mtransitapps/ca-montreal-bixi-bike-gradle.git"
 ARG GIT_BRANCH="use_docker_image"
 RUN git clone --depth 1 ${GIT_URL} --branch ${GIT_BRANCH} --single-branch $GIT_DIR
 RUN ls -l ${GIT_DIR} || echo "> SKIP"
-RUN cd ${GIT_DIR} \
-    && ./checkout_submodules.sh \
-    && ./commons/sync.sh \
-    && ./gradlew androidDependencies --console=plain
+RUN cd ${GIT_DIR} && ./checkout_submodules.sh
+RUN cd ${GIT_DIR} && ./commons/sync.sh
+RUN cd ${GIT_DIR} && ./gradlew androidDependencies --console=plain
 RUN ls -l ${GIT_DIR} || echo "> SKIP"
 RUN rm -rf ${GIT_DIR}
 
