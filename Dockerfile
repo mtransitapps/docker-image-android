@@ -109,10 +109,24 @@ RUN ls -l ${GRADLE_HOME}/bin || echo "> SKIP"
 
 RUN gradle --version
 
-RUN gradle wrapper \
-	--gradle-version ${GRADLE_VERSION} \
-    --gradle-distribution-sha256-sum="${GRADLE_SHA256}" \
-    --distribution-type="all"
+# RUN gradle wrapper \
+# 	--gradle-version ${GRADLE_VERSION} \
+#     --gradle-distribution-sha256-sum="${GRADLE_SHA256}" \
+#     --distribution-type="all"
+
+RUN echo "GITHUB_REF:${GITHUB_REF}"
+RUN echo "GITHUB_HEAD_REF:${GITHUB_HEAD_REF}"
+RUN echo "GITHUB_BASE_REF:${GITHUB_BASE_REF}"
+
+ARG GIT_DIR="/tmp/git"
+ARG GIT_URL="git@github.com:mtransitapps/ca-montreal-bixi-bike-gradle.git"
+ARG GIT_BRANCH="use_docker_image"
+RUN git clone --depth 1 ${GIT_URL} --branch ${GIT_BRANCH} --single-branch $GIT_DIR
+RUN cd ${GIT_DIR} \
+    && ./checkout_submodules.sh \
+    && ./commons/sync.sh \
+    && ./gradlew androidDependencies --console=plain
+RUN rm -rf ${GIT_DIR}
 
 RUN ls -l ${HOME} || echo "> SKIP"
 RUN ls -l ${HOME}/.gradle || echo "> SKIP"
