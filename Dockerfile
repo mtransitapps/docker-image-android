@@ -122,8 +122,10 @@ ARG GIT_DIR="/tmp/git"
 # ARG GIT_URL="git@github.com:mtransitapps/ca-montreal-bixi-bike-gradle.git"
 ARG GIT_URL="https://github.com/mtransitapps/ca-montreal-bixi-bike-gradle.git"
 ARG GIT_BRANCH="use_docker_image"
-RUN git clone --depth 1 ${GIT_URL} --branch ${GIT_BRANCH} --single-branch $GIT_DIR
+RUN git clone ${GIT_URL} --branch ${GIT_BRANCH} $GIT_DIR
+# --depth 1 --single-branch
 RUN ls -al ${GIT_DIR} || echo "> SKIP"
+RUN cat ${GIT_DIR}/.git/HEAD || echo "> SKIP"
 RUN cd ${GIT_DIR} && git status;
 RUN cd ${GIT_DIR} && ./checkout_submodules.sh
 RUN cd ${GIT_DIR} && ./commons/sync.sh
