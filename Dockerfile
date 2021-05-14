@@ -12,11 +12,19 @@ FROM ubuntu:latest
 
 LABEL maintainer="mtransit.apps@gmail.com"
 
+RUN pwd
+COPY ${GIT_SRC_DIR} ${GIT_DIR}
+
 ENV TZ=America/Toronto
 
 ENV DEBIAN_FRONTEND=noninteractive
 # ENV TERM=dumb
 ENV TERM=xterm-256color
+
+RUN echo "GITHUB_REF:${GITHUB_REF}"
+RUN echo "GITHUB_HEAD_REF:${GITHUB_HEAD_REF}"
+RUN echo "GITHUB_BASE_REF:${GITHUB_BASE_REF}"
+RUN echo "GITHUB_WORKSPACE:${GITHUB_WORKSPACE}"
 
 RUN dpkg --add-architecture i386
 RUN apt-get update -yqq
@@ -121,11 +129,6 @@ RUN sdkmanager "platform-tools" \
 #     --gradle-distribution-sha256-sum="${GRADLE_SHA256}" \
 #     --distribution-type="all"
 
-RUN echo "GITHUB_REF:${GITHUB_REF}"
-RUN echo "GITHUB_HEAD_REF:${GITHUB_HEAD_REF}"
-RUN echo "GITHUB_BASE_REF:${GITHUB_BASE_REF}"
-RUN echo "GITHUB_WORKSPACE:${GITHUB_WORKSPACE}"
-
 ARG GIT_DIR="/tmp/mt_project"
 ARG GIT_SRC_DIR="${GITHUB_WORKSPACE}/mt_project"
 # ARG GIT_SRC_DIR="mt_project"
@@ -134,7 +137,6 @@ ARG GIT_SRC_DIR="${GITHUB_WORKSPACE}/mt_project"
 # ARG GIT_BRANCH="use_docker_image"
 # RUN git clone ${GIT_URL} --branch ${GIT_BRANCH} $GIT_DIR
 # --depth 1 --single-branch
-COPY ${GIT_SRC_DIR} ${GIT_DIR}
 RUN ls -al ${GIT_DIR} || echo "> SKIP"
 RUN cat ${GIT_DIR}/.git/HEAD || echo "> SKIP"
 RUN cd ${GIT_DIR} && git status;
