@@ -119,7 +119,8 @@ RUN echo "GITHUB_HEAD_REF:${GITHUB_HEAD_REF}"
 RUN echo "GITHUB_BASE_REF:${GITHUB_BASE_REF}"
 
 ARG GIT_DIR="/tmp/git"
-ARG GIT_URL="git@github.com:mtransitapps/ca-montreal-bixi-bike-gradle.git"
+# ARG GIT_URL="git@github.com:mtransitapps/ca-montreal-bixi-bike-gradle.git"
+ARG GIT_URL="https://github.com/mtransitapps/ca-montreal-bixi-bike-gradle.git"
 ARG GIT_BRANCH="use_docker_image"
 RUN git clone --depth 1 ${GIT_URL} --branch ${GIT_BRANCH} --single-branch $GIT_DIR
 RUN cd ${GIT_DIR} \
