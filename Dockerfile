@@ -12,20 +12,20 @@ FROM ubuntu:latest
 
 LABEL maintainer="mtransit.apps@gmail.com"
 
+RUN echo "GITHUB_REF:${GITHUB_REF}"
+RUN echo "GITHUB_HEAD_REF:${GITHUB_HEAD_REF}"
+RUN echo "GITHUB_BASE_REF:${GITHUB_BASE_REF}"
+RUN echo "GITHUB_WORKSPACE:${GITHUB_WORKSPACE}"
+
 ARG GIT_DIR="/tmp/mt_project"
 ARG GIT_SRC_DIR="${GITHUB_WORKSPACE}/mt_project"
-COPY ${GIT_SRC_DIR} ${GIT_DIR}
+COPY mt_project /tmp/mt_project
 
 ENV TZ=America/Toronto
 
 ENV DEBIAN_FRONTEND=noninteractive
 # ENV TERM=dumb
 ENV TERM=xterm-256color
-
-RUN echo "GITHUB_REF:${GITHUB_REF}"
-RUN echo "GITHUB_HEAD_REF:${GITHUB_HEAD_REF}"
-RUN echo "GITHUB_BASE_REF:${GITHUB_BASE_REF}"
-RUN echo "GITHUB_WORKSPACE:${GITHUB_WORKSPACE}"
 
 RUN dpkg --add-architecture i386
 RUN apt-get update -yqq
