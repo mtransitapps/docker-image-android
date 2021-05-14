@@ -91,6 +91,7 @@ RUN sdkmanager "platforms;android-${ANDROID_API_LEVEL}"
 # https://github.com/mtransitapps/commons/blob/master/shared/gradle/wrapper/gradle-wrapper.properties
 # https://docs.gradle.org/current/userguide/installation.html
 ENV GRADLE_VERSION="6.7.1"
+ENV GRADLE_SHA256="22449f5231796abd892c98b2a07c9ceebe4688d192cd2d6763f8e3bf8acbedeb"
 ENV GRADLE_DIR="/opt/gradle"
 # ENV GRADLE_DIR="${HOME}/gradle"
 RUN sudo mkdir -p ${GRADLE_DIR}
@@ -107,6 +108,11 @@ RUN ls -l ${GRADLE_HOME} || echo "> SKIP"
 RUN ls -l ${GRADLE_HOME}/bin || echo "> SKIP"
 
 RUN gradle --version
+
+RUN gradle wrapper \
+	--gradle-version ${GRADLE_VERSION} \
+    --gradle-distribution-sha256-sum="${GRADLE_SHA256}" \
+    --distribution-type="all"
 
 RUN ls -l ${HOME} || echo "> SKIP"
 RUN ls -l ${HOME}/.gradle || echo "> SKIP"
