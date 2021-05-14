@@ -27,7 +27,7 @@ jobs:
         with:
           repository: mtransitapps/ca-montreal-bixi-bike-gradle
           ref: use_docker_image
-          path: /tmp/mt_project
+          path: mt_project
       -
         name: Build and push
         id: docker_build

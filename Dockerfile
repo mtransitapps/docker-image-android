@@ -59,7 +59,6 @@ RUN sudo chown montransit:montransit ${ANDROID_HOME}
 ARG CMDLINE_TOOLS_URL=https://dl.google.com/android/repository/commandlinetools-linux-${ANDROID_SDK_TOOLS_VERSION}_latest.zip
 # RUN wget --output-document=$ANDROID_HOME/cmdline-tools.zip $CMDLINE_TOOLS_URL
 RUN mkdir -p ${ANDROID_HOME}/cmdline-tools/latest
-# RUN sudo chown -R montransit:montransit ${ANDROID_HOME}
 RUN wget -O /tmp/cmdline-tools.zip -t 5 "${CMDLINE_TOOLS_URL}"
 RUN unzip -q /tmp/cmdline-tools.zip -d /tmp/cmdline-tools
 RUN mv /tmp/cmdline-tools/cmdline-tools/* ${ANDROID_HOME}/cmdline-tools/latest
@@ -118,7 +117,8 @@ RUN echo "GITHUB_REF:${GITHUB_REF}"
 RUN echo "GITHUB_HEAD_REF:${GITHUB_HEAD_REF}"
 RUN echo "GITHUB_BASE_REF:${GITHUB_BASE_REF}"
 
-ARG GIT_DIR="/tmp/mt_project"
+# ARG GIT_DIR="/tmp/mt_project"
+ARG GIT_DIR="${GITHUB_WORKSPACE}/mt_project"
 # ARG GIT_URL="git@github.com:mtransitapps/ca-montreal-bixi-bike-gradle.git"
 # ARG GIT_URL="https://github.com/mtransitapps/ca-montreal-bixi-bike-gradle.git"
 # ARG GIT_BRANCH="use_docker_image"
